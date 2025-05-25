@@ -3,6 +3,7 @@ package com.nextbook.config;
 import com.nextbook.servicio.UsuarioServicio;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,7 +15,7 @@ public class WebSecurityConfig {
 
     private final UsuarioServicio usuarioServicio;
 
-    public WebSecurityConfig(UsuarioServicio usuarioServicio) {
+    public WebSecurityConfig(@Lazy UsuarioServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
     }
 
@@ -22,7 +23,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/recuperar-password", "/css/**", "/img/**").permitAll()
+                .requestMatchers("/login", "/recuperar-password", "/css/**", "/img/**", "/healthz").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
