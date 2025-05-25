@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cambiar contraseña</title>
+</head>
+<body>
+
+<h2>Cambiar contraseña</h2>
+
+<form th:action="@{/cambiar-contrasena}" method="post">
+    <label>Contraseña actual:</label><br>
+    <input type="password" name="actual" required><br><br>
+
+    <label>Nueva contraseña:</label><br>
+    <input type="password" name="nueva" required><br><br>
+
+    <button type="submit">Actualizar contraseña</button>
+</form>
+
+<div th:if="${mensaje}" th:text="${mensaje}" style="margin-top: 1em; color: green;"></div>
+
+</body>
+</html>
