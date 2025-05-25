@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Lista de Devoluciones</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Devoluciones</h1>
+    <a th:href="@{/devoluciones/nuevo}" class="btn btn-primary mb-3">Nueva Devolución</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Préstamo</th>
+                <th>Fecha de Devolución Real</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="devolucion : ${devoluciones}">
+                <td th:text="${devolucion.prestamo.id}"></td>
+                <td th:text="${#dates.format(devolucion.fechaDevolucionReal, 'dd/MM/yyyy')}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

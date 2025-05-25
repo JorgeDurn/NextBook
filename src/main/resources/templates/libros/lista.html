@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Lista de Libros</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Libros</h1>
+    <a th:href="@{/libros/nuevo}" class="btn btn-primary mb-3">Nuevo Libro</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Género</th>
+                <th>Año</th>
+                <th>Cantidad Disponible</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="libro : ${libros}">
+                <td th:text="${libro.titulo}"></td>
+                <td th:text="${libro.autor}"></td>
+                <td th:text="${libro.genero}"></td>
+                <td th:text="${libro.anioPublicacion}"></td>
+                <td th:text="${libro.cantidadDisponible}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

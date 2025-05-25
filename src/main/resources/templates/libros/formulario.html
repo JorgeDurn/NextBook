@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Formulario Libro</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1 th:text="${libro.id != null} ? 'Editar Libro' : 'Nuevo Libro'"></h1>
+    <form th:action="@{/libros/guardar}" th:object="${libro}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+            <label>Título:</label>
+            <input type="text" th:field="*{titulo}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Autor:</label>
+            <input type="text" th:field="*{autor}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Género:</label>
+            <input type="text" th:field="*{genero}" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>Año de publicación:</label>
+            <input type="number" th:field="*{anioPublicacion}" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>Cantidad Disponible:</label>
+            <input type="number" th:field="*{cantidadDisponible}" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/libros}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</section>
+</body>
+</html>

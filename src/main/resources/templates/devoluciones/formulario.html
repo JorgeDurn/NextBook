@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Formulario Devolución</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Nueva Devolución</h1>
+    <form th:action="@{/devoluciones/guardar}" th:object="${devolucion}" method="post">
+        <div class="mb-3">
+            <label>Préstamo:</label>
+            <input type="number" th:field="*{prestamo.id}" class="form-control" placeholder="ID del préstamo" required />
+        </div>
+        <div class="mb-3">
+            <label>Fecha de Devolución Real:</label>
+            <input type="date" th:field="*{fechaDevolucionReal}" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/devoluciones}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</section>
+</body>
+</html>

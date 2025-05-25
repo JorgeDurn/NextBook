@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Lista de Sanciones</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Sanciones</h1>
+    <a th:href="@{/sanciones/nuevo}" class="btn btn-primary mb-3">Nueva Sanción</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Motivo</th>
+                <th>Fecha</th>
+                <th>Importe (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="sancion : ${sanciones}">
+                <td th:text="${sancion.usuario.nombre}"></td>
+                <td th:text="${sancion.motivo}"></td>
+                <td th:text="${#dates.format(sancion.fecha, 'dd/MM/yyyy')}"></td>
+                <td th:text="${sancion.importe}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
