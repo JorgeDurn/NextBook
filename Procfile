@@ -1,1 +1,0 @@
-web: java -Dserver.port=$PORT -Xmx256m -Xms128m -jar target/nextbook-0.0.1-SNAPSHOT.jar
