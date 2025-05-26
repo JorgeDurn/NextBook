@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
 <head>
     <title>Cambiar contraseña</title>
 </head>
+
 <body>
+<section layout:fragment="content">
+    <h2>Cambiar contraseña</h2>
 
-<h2>Cambiar contraseña</h2>
+    <form th:action="@{/cambiar-contrasena}" method="post">
+        <label>Contraseña actual:</label><br>
+        <input type="password" name="actual" required><br><br>
 
-<form th:action="@{/cambiar-contrasena}" method="post">
-    <label>Contraseña actual:</label><br>
-    <input type="password" name="actual" required><br><br>
+        <label>Nueva contraseña:</label><br>
+        <input type="password" name="nueva" required><br><br>
 
-    <label>Nueva contraseña:</label><br>
-    <input type="password" name="nueva" required><br><br>
+        <button type="submit">Actualizar contraseña</button>
+    </form>
 
-    <button type="submit">Actualizar contraseña</button>
-</form>
-
-<div th:if="${mensaje}" th:text="${mensaje}" style="margin-top: 1em; color: green;"></div>
-
+    <div th:if="${mensaje}" th:text="${mensaje}" style="margin-top: 1em; color: green;"></div>
+</section>
 </body>
 </html>
