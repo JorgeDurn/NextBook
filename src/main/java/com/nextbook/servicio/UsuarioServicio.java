@@ -27,8 +27,6 @@ public class UsuarioServicio implements UserDetailsService {
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");
-        } else {
-            System.out.println("🟢 Usuario autenticado: " + email);
         }
 
         return org.springframework.security.core.userdetails.User
@@ -43,6 +41,9 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     public void actualizarContrasena(String email, String nuevaContrasena) {
+        if (!validarContrasenaSegura(nuevaContrasena)) {
+            throw new IllegalArgumentException("La contraseña no cumple los requisitos de seguridad.");
+        }
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         if (usuario != null) {
             usuario.setContrasena(passwordEncoder.encode(nuevaContrasena));
@@ -59,10 +60,14 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     public Usuario guardar(Usuario usuario) {
+        if (!validarContrasenaSegura(usuario.getContrasena())) {
+            throw new IllegalArgumentException("La contraseña no cumple los requisitos de seguridad.");
+        }
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         return usuarioRepositorio.save(usuario);
     }
 
-    public void eliminar(Long id) {
-        usuarioRepositorio.deleteById(id);
+    private boolean validarContrasenaSegura(String contrasena) {
+        return contrasena.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
     }
 }
