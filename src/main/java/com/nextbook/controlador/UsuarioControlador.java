@@ -4,9 +4,7 @@ import com.nextbook.modelo.Usuario;
 import com.nextbook.servicio.UsuarioServicio;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioControlador {
@@ -17,6 +15,28 @@ public class UsuarioControlador {
         this.usuarioServicio = usuarioServicio;
     }
 
+    // Listar usuarios
+    @GetMapping("/usuarios")
+    public String listarUsuarios(Model model) {
+        model.addAttribute("usuarios", usuarioServicio.listarTodos());
+        return "lista";
+    }
+
+    // Mostrar formulario para nuevo usuario
+    @GetMapping("/usuarios/nuevo")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("usuario", new Usuario());
+        return "formulario";
+    }
+
+    // Guardar usuario (nuevo o editado)
+    @PostMapping("/usuarios/guardar")
+    public String guardarUsuario(@ModelAttribute Usuario usuario) {
+        usuarioServicio.guardar(usuario);
+        return "redirect:/usuarios";
+    }
+
+    // Registro desde el admin (opcional si lo sigues usando)
     @PostMapping("/admin/registro")
     public String registro(@RequestParam String email,
                             @RequestParam String contrasena,
@@ -28,44 +48,9 @@ public class UsuarioControlador {
             usuario.setRol("USER");
             usuarioServicio.guardar(usuario);
             return "redirect:/login?registroExitoso";
-
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "registro";
-        }
-    }
-
-    @PostMapping("/admin/cambiar-contrasena")
-    public String cambiarContrasena(@RequestParam String email,
-                                     @RequestParam String nuevaContrasena,
-                                     Model model) {
-        try {
-            usuarioServicio.actualizarContrasena(email, nuevaContrasena);
-            model.addAttribute("mensaje", "Contraseña actualizada correctamente");
-            return "redirect:/login?logout";
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("error", e.getMessage());
-            return "admin-cambiar-contrasena";
-        }
-    }
-
-    // ✅ NUEVO RESET ADMIN
-    @GetMapping("/admin/reset-contrasena")
-    public String mostrarReset() {
-        return "admin-reset-contrasena";
-    }
-
-    @PostMapping("/admin/reset-contrasena")
-    public String resetContrasena(@RequestParam String email,
-                                   @RequestParam String nuevaContrasena,
-                                   Model model) {
-        try {
-            usuarioServicio.actualizarContrasena(email, nuevaContrasena);
-            model.addAttribute("mensaje", "Contraseña reseteada correctamente.");
-            return "admin-reset-contrasena";
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("error", e.getMessage());
-            return "admin-reset-contrasena";
         }
     }
 }
