@@ -22,27 +22,26 @@ public class UsuarioServicio implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 🔐 Login con Spring Security
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");
+        } else {
+            System.out.println("🟢 Usuario autenticado: " + email);
         }
 
         return org.springframework.security.core.userdetails.User
             .withUsername(usuario.getEmail())
             .password(usuario.getContrasena())
-            .roles(usuario.getRol())  // Ej: "ADMIN", "USER"
+            .roles(usuario.getRol())
             .build();
     }
 
-    // ✅ Recuperación de contraseña: buscar usuario por email
     public Usuario buscarPorEmail(String email) {
         return usuarioRepositorio.findByEmail(email);
     }
 
-    // 🔁 Restablecer la contraseña
     public void actualizarContrasena(String email, String nuevaContrasena) {
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         if (usuario != null) {
@@ -51,7 +50,6 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
-    // Otras operaciones CRUD útiles
     public List<Usuario> listarTodos() {
         return usuarioRepositorio.findAll();
     }
