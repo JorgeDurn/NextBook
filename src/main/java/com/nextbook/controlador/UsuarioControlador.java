@@ -19,14 +19,14 @@ public class UsuarioControlador {
     @GetMapping("/usuarios")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioServicio.listarTodos());
-        return "lista";
+        return "usuarios/lista";
     }
 
     // Mostrar formulario para nuevo usuario
     @GetMapping("/usuarios/nuevo")
     public String mostrarFormulario(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "formulario";
+        return "usuarios/formulario";
     }
 
     // Guardar usuario (nuevo o editado)

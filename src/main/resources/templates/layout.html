@@ -32,7 +32,7 @@
                 <span class="navbar-text text-white me-3">
                     Bienvenido, <span th:text="${#authentication.name}">Usuario</span>
                 </span>
-                <a class="btn btn-outline-light me-2" th:href="@{/cambiar-contrasena}">Cambiar contraseña</a>
+                <a class="btn btn-outline-light me-2" th:href="@{/perfil/cambiar-contrasena}">Cambiar contraseña</a>
                 <form th:action="@{/logout}" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-link p-0" style="text-decoration: underline; color: white; background: none; border: none;">
                         Cerrar sesión

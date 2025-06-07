@@ -4,6 +4,7 @@ import com.nextbook.servicio.UsuarioServicio;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;  // <-- Añadido
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +15,12 @@ public class PerfilControlador {
 
     public PerfilControlador(UsuarioServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
+    }
+
+    // ✅ NUEVO: Mostrar el formulario de cambio de contraseña
+    @GetMapping("/perfil/cambiar-contrasena")
+    public String mostrarFormularioCambioContrasena() {
+        return "perfil/cambiar-contrasena";
     }
 
     // Cambio de contraseña del propio usuario
@@ -28,7 +35,7 @@ public class PerfilControlador {
             return "redirect:/login?logout";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
-            return "perfil-cambiar-contrasena"; // Vista de error de usuario normal
+            return "perfil/cambiar-contrasena";
         }
     }
 }
